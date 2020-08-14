@@ -58,35 +58,39 @@
 
 <cx-td-link outlet="table.budget.data.name" prop="name" tabIndex="0">
 </cx-td-link>
-<cx-td-link outlet="table.budget.data.active" [template]="active"> </cx-td-link>
-<cx-td-link outlet="table.budget.data.amount" [template]="amount"> </cx-td-link>
-<cx-td-link outlet="table.budget.data.suffix" [template]="suffix"> </cx-td-link>
-<cx-td-link outlet="table.budget.data.dateRange" [template]="dataRange">
+
+<cx-td-link outlet="table.budget.data.active">
+  <ng-template let-model="model">
+    <span [class.is-enabled]="model.active">
+      {{
+        (model.active ? 'organization.enabled' : 'organization.disabled')
+          | cxTranslate
+      }}
+    </span>
+  </ng-template>
 </cx-td-link>
+
+<cx-td-link outlet="table.budget.data.amount">
+  <ng-template let-model="model">
+    {{ model.budget + ' ' + model.currency }}
+  </ng-template>
+</cx-td-link>
+
+<cx-td-link outlet="table.budget.data.suffix">
+  <ng-template>
+    <cx-icon type="CARET_RIGHT"></cx-icon>
+  </ng-template>
+</cx-td-link>
+
+<cx-td-link outlet="table.budget.data.dateRange">
+  <ng-template let-model="model">
+    <a
+      [routerLink]="{ cxRoute: 'budgetDetails', params: model } | cxUrl"
+      [tabindex]="-1"
+    >
+      {{ model.startDate | cxDate }} - {{ model.endDate | cxDate }}
+    </a>
+  </ng-template>
+</cx-td-link>
+
 <cx-td-link outlet="table.budget.data.unit" prop="orgUnit.name"> </cx-td-link>
-
-<ng-template #amount let-model="model">
-  {{ model.budget + ' ' + model.currency }}
-</ng-template>
-
-<ng-template #active let-model="model">
-  <span [class.is-enabled]="model.active">
-    {{
-      (model.active ? 'organization.enabled' : 'organization.disabled')
-        | cxTranslate
-    }}
-  </span>
-</ng-template>
-
-<ng-template #dataRange let-model="model">
-  <a
-    [routerLink]="{ cxRoute: 'budgetDetails', params: model } | cxUrl"
-    [tabindex]="-1"
-  >
-    {{ model.startDate | cxDate }} - {{ model.endDate | cxDate }}
-  </a>
-</ng-template>
-
-<ng-template #suffix>
-  <cx-icon type="CARET_RIGHT"></cx-icon>
-</ng-template>

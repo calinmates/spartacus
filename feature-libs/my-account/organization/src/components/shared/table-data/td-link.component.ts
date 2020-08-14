@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ContentChild,
   Input,
   TemplateRef,
 } from '@angular/core';
@@ -21,7 +22,7 @@ export class TableDataLinkComponent {
 
   @Input() tabIndex = -1;
 
-  @Input() template: TemplateRef<any>;
+  @ContentChild(TemplateRef) template: TemplateRef<any>;
 
   constructor() {}
 
